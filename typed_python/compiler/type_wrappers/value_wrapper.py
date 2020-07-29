@@ -92,3 +92,5 @@ class ValueWrapper(Wrapper):
 
     def convert_to_self_with_target(self, context, targetVal, otherExpr, conversionLevel, mayThrowOnFailure=False):
         return context.constant(self.typeRepresentation.Value) == otherExpr
+    def convert_type_call(self, context, typeInst, args, kwargs):
+        return context.constant(self.typeRepresentation.Value)
