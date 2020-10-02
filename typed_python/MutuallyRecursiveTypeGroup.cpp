@@ -797,6 +797,19 @@ public:
         }
     }
 
+    std::string stateAsString() {
+        std::ostringstream s;
+
+        for (auto& groupPtr: mGroups) {
+            s << "*************\n";
+            for (TypeOrPyobj topo: *groupPtr) {
+                s << topo.name() << "\n";
+            }
+        }
+
+        return s.str();
+    }
+
 private:
     // everything in a group somewhere
     std::set<TypeOrPyobj> mInAGroup;
@@ -834,23 +847,26 @@ void MutuallyRecursiveTypeGroup::constructRecursiveTypeGroup(TypeOrPyobj root) {
 
     MutuallyRecursiveTypeGroupSearch groupFinder;
 
-    static thread_local int count = 0;
-    count++;
-    if (count > 1) {
+    static thread_local MutuallyRecursiveTypeGroupSearch* existingGroupFinder = nullptr;
+
+    if (existingGroupFinder) {
         throw std::runtime_error(
             "There should be only one group algo running at once. Somehow, "
-            "our reference to " + root.name() + " wasn't captured correctly."
+            "our reference to " + root.name() + " wasn't captured correctly:\n"
+            + existingGroupFinder->stateAsString()
         );
     }
     try {
+        existingGroupFinder = &groupFinder;
+
         groupFinder.pushGroup(root);
 
         groupFinder.findAllGroups();
     } catch(...) {
-        count --;
+        existingGroupFinder = nullptr;
         throw;
     }
-    count--;
+    existingGroupFinder = nullptr;
 }
 
 // is this object is globally identifiable by module name and object name?
