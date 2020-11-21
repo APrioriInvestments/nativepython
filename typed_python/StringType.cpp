@@ -463,7 +463,7 @@ int64_t StringType::find(layout *l, layout *sub, int64_t start, int64_t stop) {
     if (start < 0 || stop < 0 || start >= stop || sub->pointcount > l->pointcount || start > l->pointcount - sub->pointcount)
         return -1;
 
-    if (l->bytes_per_codepoint == 1 and sub->bytes_per_codepoint == 1 && sub->pointcount == 1) {
+    if (l->bytes_per_codepoint == 1 && sub->bytes_per_codepoint == 1 && sub->pointcount == 1) {
         const uint8_t* lPtr = (const uint8_t*)l->data;
         const uint8_t subChar = sub->data[0];
 
@@ -516,7 +516,7 @@ int64_t StringType::rfind(layout *l, layout *sub, int64_t start, int64_t stop) {
     if (start < 0 || stop < 0 || start >= stop || sub->pointcount > l->pointcount || start > l->pointcount - sub->pointcount)
         return -1;
 
-    if (l->bytes_per_codepoint == 1 and sub->bytes_per_codepoint == 1 && sub->pointcount == 1) {
+    if (l->bytes_per_codepoint == 1 && sub->bytes_per_codepoint == 1 && sub->pointcount == 1) {
         const uint8_t* lPtr = (const uint8_t*)l->data;
         const uint8_t subChar = sub->data[0];
 
@@ -575,7 +575,7 @@ int64_t StringType::count(layout *l, layout *sub, int64_t start, int64_t stop) {
     if (start < 0 || stop < 0 || start >= stop || sub->pointcount > l->pointcount || start > l->pointcount - sub->pointcount)
         return 0;
 
-    if (l->bytes_per_codepoint == 1 and sub->bytes_per_codepoint == 1 && sub->pointcount == 1) {
+    if (l->bytes_per_codepoint == 1 && sub->bytes_per_codepoint == 1 && sub->pointcount == 1) {
         const uint8_t* lPtr = (const uint8_t*)l->data;
         const uint8_t subChar = sub->data[0];
 
